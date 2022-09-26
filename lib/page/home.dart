@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import '../helper/statusdetail.dart';
 import '../helper/text_field.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xff19171A),
         body: SingleChildScrollView(
           child: Container(
@@ -111,167 +113,40 @@ class _MyHomePageState extends State<MyHomePage> {
                                   },
                                 ),
                               )
-                            : Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      provider.isWorkDone
-                                          ? "Your Time is Over, So Please Go ASAP...!"
-                                          : "Ohh Sorry, Your time is not over",
-                                      style: const TextStyle(
-                                          color: Color(0xFF9F9EA3),
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  !provider.isWorkDone
-                                      ? Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Text(
-                                            provider.isWorkDone
-                                                ? ""
-                                                : "Effective Hour : ${provider.effectiveHour}",
-                                            style: const TextStyle(
-                                                color: Color(0xFF9F9EA3),
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        )
-                                      : Container(),
-                                  !provider.isWorkDone
-                                      ? Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Text(
-                                            provider.isWorkDone
-                                                ? ""
-                                                : "Remaing Time: ${provider.reamingTime}",
-                                            style: const TextStyle(
-                                                color: Color(0xFF9F9EA3),
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        )
-                                      : Container(),
-                                  !provider.isWorkDone
-                                      ? Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Text(
-                                            provider.isWorkDone
-                                                ? ""
-                                                : "Total Time: ${provider.totalHour}",
-                                            style: const TextStyle(
-                                                color: Color(0xFF9F9EA3),
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        )
-                                      : Container(),
-                                  provider.isWorkDone
-                                      ? SizedBox(
-                                          height: 200,
-                                          width: 200,
-                                          child:
-                                              Lottie.asset('assets/run2.json'),
-                                        )
-                                      : SizedBox(
-                                          height: 200,
-                                          width: 200,
-                                          child: Lottie.asset(
-                                              'assets/workdone.json'),
-                                        ),
-                                ],
+                            : StatusDetail(
+                                effectiveHour: '${provider.effectiveHour!}',
+                                isWorkDone: provider.isWorkDone,
+                                reamingTime: '${provider.reamingTime}',
+                                totalHour: '${provider.totalHour}',
                               )
                         : !provider.isCalculate
-                        ? Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.only(left: 8.0,right: 8.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: const Color(0xff6C6B70),
-                                ),
-                                child: TextFormField(
-                                  controller: provider.autoTextController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                  ),
-                                  style: const TextStyle(color: Colors.white),
-                                ),
+                            ? Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(15.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: const Color(0xff6C6B70),
+                                    ),
+                                    child: TextFormField(
+                                      controller: provider.autoTextController,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  )
+                                ],
                               )
-                            ],
-                          ) : Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            provider.isWorkDone
-                                ? "Your Time is Over, So Please Go ASAP...!"
-                                : "Ohh Sorry, Your time is not over",
-                            style: const TextStyle(
-                                color: Color(0xFF9F9EA3),
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        !provider.isWorkDone
-                            ? Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            provider.isWorkDone
-                                ? ""
-                                : "Effective Hour : ${provider.effectiveHour}",
-                            style: const TextStyle(
-                                color: Color(0xFF9F9EA3),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                            : Container(),
-                        !provider.isWorkDone
-                            ? Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            provider.isWorkDone
-                                ? ""
-                                : "Remaing Time: ${provider.reamingTime}",
-                            style: const TextStyle(
-                                color: Color(0xFF9F9EA3),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                            : Container(),
-                        !provider.isWorkDone
-                            ? Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            provider.isWorkDone
-                                ? ""
-                                : "Total Time: ${provider.totalHour}",
-                            style: const TextStyle(
-                                color: Color(0xFF9F9EA3),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                            : Container(),
-                        provider.isWorkDone
-                            ? SizedBox(
-                          height: 200,
-                          width: 200,
-                          child:
-                          Lottie.asset('assets/run2.json'),
-                        )
-                            : SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: Lottie.asset(
-                              'assets/workdone.json'),
-                        ),
-                      ],
-                    ),
+                            : StatusDetail(
+                                effectiveHour: '${provider.effectiveHour!}',
+                                isWorkDone: provider.isWorkDone,
+                                reamingTime: '${provider.reamingTime}',
+                                totalHour: '${provider.totalHour}',
+                              ),
                     SizedBox(
                       height: height * 0.04,
                     ),
@@ -288,7 +163,9 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, provider, child) => GestureDetector(
               onTap: !provider.isCalculate
                   ? () {
-                     provider.tabValue == 0 ? provider.calculateTime() : provider.autoCalculateTime();
+                      provider.tabValue == 0
+                          ? provider.calculateTime()
+                          : provider.autoCalculateTime();
                     }
                   : () {
                       provider.recheck();

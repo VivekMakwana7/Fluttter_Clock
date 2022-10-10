@@ -1,4 +1,3 @@
-import 'package:clocker/helper/pref_utils.dart';
 import 'package:clocker/item/appbar.dart';
 import 'package:clocker/item/clock.dart';
 import 'package:clocker/provider/log_provider.dart';
@@ -6,6 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+
+import 'dart:html';
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
 
 import '../helper/message.dart';
 
@@ -17,14 +20,29 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final controller = TextEditingController();
 
-  checkValue() async {
-    bool value = await PrefUtils.getIsFirst();
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  Widget adsenseAdsView() {
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(
+        'adViewType',
+            (int viewID) => IFrameElement()
+          ..width = '320'
+          ..height = '100'
+          ..src = 'adview.html'
+          ..style.border = 'none');
+
+    return const SizedBox(
+      height: 100.0,
+      width: 320.0,
+      child: HtmlElementView(
+        viewType: 'adViewType',
+      ),
+    );
   }
 
   @override
@@ -242,6 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.blueAccent,
                           )
                         : Container(),
+                    adsenseAdsView(),
                     SizedBox(
                       height: height * 0.04,
                     ),
@@ -261,7 +280,6 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, provider, child) => GestureDetector(
               onTap: !provider.isCalculate
                   ? () {
-                      PrefUtils.setIsFirst(false);
                       provider.autoCalculateTime(context);
                     }
                   : () {

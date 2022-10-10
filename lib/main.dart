@@ -3,7 +3,6 @@ import 'package:clocker/provider/log_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'helper/pref_utils.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
